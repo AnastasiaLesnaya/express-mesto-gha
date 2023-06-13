@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { ERROR_NOT_FOUND } = require('./utils/response');
 
-const { PORT = 3000, MONGODB = 'mongodb://localhost:27017/mestodb' } = process.env;
+const { PORT = 3000, MONGODB = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 const app = express();
 
