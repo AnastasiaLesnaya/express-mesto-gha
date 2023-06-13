@@ -1,18 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
-const { PORT = 3000, BASE_PATH = 'localhost' } = process.env;
-
 const { ERROR_NOT_FOUND } = require('./utils/response');
+
+const { PORT = 3000, MONGODB = 'mongodb://localhost:27017/mestodb' } = process.env;
 
 const app = express();
 
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 
-const mestodb = 'mongodb://127.0.0.1:27017/mestodb';
-mongoose.set('strictQuery', false);
-mongoose.connect(mestodb);
+mongoose.connect(MONGODB);
+// mongoose.set('strictQuery', false);
 
 app.use(express.json());
 
@@ -28,5 +26,5 @@ app.use('*', (req, res) => {
   res.status(ERROR_NOT_FOUND).send({ message: 'Запрашиваемая страница не найдена' });
 });
 app.listen(PORT, () => {
-  console.log(`Сервер — http://${BASE_PATH}:${PORT}`);
+  console.log(`App listening on port ${PORT}`);
 });
