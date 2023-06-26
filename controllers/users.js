@@ -50,7 +50,7 @@ const registerUser = (req, res, next) => {
   }))
     // пароль не передаётся
     .then(() => res.status(SUCCESS_CREATED).send({
-      name, about, avatar, email,
+      name, about, avatar, email
     }))
     .catch((error) => {
       if (error instanceof ValidationError) {
@@ -72,7 +72,9 @@ const updateUserData = (req, res, next) => {
     .catch((error) => {
       if (error instanceof ValidationError) {
         next(new BadRequests('Переданы некорректные данные при обновлении профиля'));
-      } else { next(error); }
+      } else {
+        next(error);
+      }
     });
 };
 
@@ -87,7 +89,9 @@ const updateUserAvatar = (req, res, next) => {
     .catch((error) => {
       if (error instanceof ValidationError) {
         next(new BadRequests('Переданы некорректные данные при обновлении аватара'));
-      } else { next(error); }
+      } else {
+        next(error);
+      }
     });
 };
 
@@ -120,5 +124,5 @@ module.exports = {
   updateUserData,
   updateUserAvatar,
   authorizeUser,
-  getUserProfile,
+  getUserProfile
 };

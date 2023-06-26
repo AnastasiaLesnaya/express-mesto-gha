@@ -6,6 +6,7 @@ const { validateUserAuth, validateUserReg } = require('../utils/validation');
 const auth = require('../middlewares/auth');
 const cardRouter = require('./cards');
 const userRouter = require('./users');
+
 const NotFound = require('../utils/errors/NotFound');
 
 // Регистрация, авторизация (+валидация)

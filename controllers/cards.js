@@ -27,7 +27,6 @@ const createCard = (req, res, next) => {
   Card.create({ name, link, owner: req.user._id })
     .then((cardObject) => res.status(SUCCESS_CREATED).send({ data: cardObject }))
     .catch((error) => {
-      // https://mongoosejs.com/docs/api/error.html#error_Error-ValidationError
       if (error instanceof ValidationError) {
         next(new BadRequests('Переданы некорректные данные при создании карточки'));
       } else {
@@ -53,7 +52,9 @@ const likeCard = (req, res, next) => {
     .catch((error) => {
       if (error instanceof CastError) {
         next(new BadRequests('Некорректные данные для добавления лайка'));
-      } else { next(error); }
+      } else {
+        next(error);
+      }
     });
 };
 
@@ -82,7 +83,7 @@ const removeLikeCard = (req, res, next) => {
 
 // удаляем карточку
 const deleteCard = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.cardId)
+  Card.findById(req.params.cardId)
     .then((selectedCard) => {
       if (!selectedCard) {
 // карточки не существует
@@ -106,5 +107,9 @@ const deleteCard = (req, res, next) => {
 };
 
 module.exports = {
-  getCardList, createCard, likeCard, removeLikeCard, deleteCard,
+  getCardList,
+  createCard,
+  likeCard,
+  removeLikeCard,
+  deleteCard
 };
