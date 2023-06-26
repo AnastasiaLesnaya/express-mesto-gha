@@ -23,7 +23,7 @@ const getUserList = (req, res, next) => {
 };
 
 // получаем пользователя по Id
-const getUserId = (req, res) => {
+const getUserId = (req, res, next) => {
   User.findById(req.params.userId)
     .then((selectedUser) => {
       if (selectedUser) {
