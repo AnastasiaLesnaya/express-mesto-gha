@@ -6,7 +6,7 @@ const { ValidationError, CastError } = mongoose.Error;
 
 const User = require('../models/user');
 
-const { SUCCESS_CREATED } = require('../utils/response');
+const { SUCCESS_CREATED, DUPLICATE_ERROR } = require('../utils/response');
 
 // 400
 const BadRequests = require('../utils/errors/BadRequest');
@@ -55,7 +55,7 @@ const registerUser = (req, res, next) => {
     .catch((error) => {
       if (error instanceof ValidationError) {
         next(new BadRequests('Переданы некорректные данные при создании пользователя'));
-      } else if (error.code === DUPLICATE_OBJECT) {
+      } else if (error.code === DUPLICATE_ERROR) {
         next(new ConflictingRequest('Пользователь с указанной почтой уже существует'));
       } else { next(error); }
     });
