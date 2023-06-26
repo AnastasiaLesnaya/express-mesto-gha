@@ -1,30 +1,30 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { ERROR_NOT_FOUND } = require('./utils/response');
+const { errors } = require('celebrate');
 
 const { PORT = 3000, MONGODB = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
+// Защита сервера
+const helmet = require('helmet');
+
+// Роуты
+const mainRouter = require('./routes/index');
+
 const app = express();
 
-const userRouter = require('./routes/users');
-const cardRouter = require('./routes/cards');
+const responseHandler = require('./middlewares/res-handler');
 
 mongoose.connect(MONGODB);
-// mongoose.set('strictQuery', false);
 
 app.use(express.json());
+app.use(helmet());
 
-// временно захардкодили пользователя
-app.use((req, res, next) => {
-  req.user = { _id: '648785f2f2bcafc33555b75e' };
-  
-  next();
-});
-app.use('/cards', cardRouter);
-app.use('/users', userRouter);
-app.use('*', (req, res) => {
-  res.status(ERROR_NOT_FOUND).send({ message: 'Запрашиваемая страница не найдена' });
-});
+app.use(mainRouter);
+
+app.use(errors());
+app.use(responseHandler);
+
+
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
