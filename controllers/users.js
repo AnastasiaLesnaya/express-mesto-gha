@@ -103,7 +103,7 @@ const authorizeUser = (req, res, next) => {
       const userToken = jwt.sign({ _id: selectedUser._id }, 'safekey', { expiresIn: '7d' });
       res.send({ userToken });
     })
-    .catch((error) => next(error));
+    .catch(next);
 };
 
 // получение профиля
@@ -114,7 +114,7 @@ const getUserProfile = (req, res, next) => {
         next(new NotFound('Пользователь по указанному _id не найден'));
       } else { res.send({ data: selectedUser }); }
     })
-    .catch((error) => { next(error); });
+    .catch(next);
 };
 
 module.exports = {
