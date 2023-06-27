@@ -12,7 +12,6 @@ const {
   validateUserId, validateUserUpdate, validateUserAvatar,
 } = require('../utils/validation');
 
-
 userRouter.get('/', getUserList);
 userRouter.get('/me', getUserProfile);
 userRouter.get('/:userId', validateUserId, getUserId);
