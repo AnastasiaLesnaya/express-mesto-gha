@@ -11,7 +11,7 @@ const { SUCCESS_CREATED, DUPLICATE_ERROR } = require('../utils/response');
 // 400
 const BadRequests = require('../utils/errors/BadRequest');
 // 404
- const NotFound = require('../utils/errors/NotFound');
+const NotFound = require('../utils/errors/NotFound');
 // 409
 const ConflictingRequest = require('../utils/errors/ConflictingRequest');
 
@@ -30,7 +30,7 @@ const getUserId = (req, res, next) => {
         res.send({ data: selectedUser });
       } else {
         next(new NotFound('Пользователь по указанному _id не найден'));
-    }
+      }
     })
     .catch((error) => {
       if (error instanceof CastError) {
@@ -50,7 +50,7 @@ const registerUser = (req, res, next) => {
   }))
     // пароль не передаётся
     .then(() => res.status(SUCCESS_CREATED).send({
-      name, about, avatar, email
+      name, about, avatar, email,
     }))
     .catch((error) => {
       if (error instanceof ValidationError) {
@@ -124,5 +124,5 @@ module.exports = {
   updateUserData,
   updateUserAvatar,
   authorizeUser,
-  getUserProfile
+  getUserProfile,
 };
