@@ -68,9 +68,9 @@ const removeLikeCard = (req, res, next) => {
     .then((selectedCard) => {
       if (selectedCard) {
         res.send({ data: selectedCard });
-      }  else {
+      } else {
         next(new NotFound('Карточка не найдена'));
-    }
+      }
     })
     .catch((error) => {
       if (error instanceof CastError) {
@@ -86,13 +86,13 @@ const deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .then((selectedCard) => {
       if (!selectedCard) {
-// карточки не существует
+        // карточки не существует
         return next(new NotFound('Карточка не найдена'));
-// карточка не принадлежит пользователю
+        // карточка не принадлежит пользователю
       } if (!selectedCard.owner.equals(req.user._id)) {
         return next(new Forbidden('Вы не можете удалить чужую карточку'));
       }
-// удаление своей карточки
+      // удаление своей карточки
       return Card.findByIdAndDelete(req.params.cardId)
         .orFail(() => new NotFound('Карточка не найдена'))
         .then(() => { res.send({ message: 'Карточка удалена' }); });
@@ -111,5 +111,5 @@ module.exports = {
   createCard,
   likeCard,
   removeLikeCard,
-  deleteCard
+  deleteCard,
 };
